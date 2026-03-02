@@ -1,0 +1,21 @@
+# 使用輕量版的 Python 3.10 作為基底
+FROM python:3.10-slim
+
+# 關鍵指令：安裝 Chromium 瀏覽器與 Noto 中文字體 (防止變方塊字)
+RUN apt-get update && apt-get install -y \
+    chromium \
+    fonts-noto-cjk \
+    && rm -rf /var/lib/apt/lists/*
+
+# 設定工作目錄
+WORKDIR /app
+
+# 複製 requirements.txt 並安裝套件
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# 複製所有程式碼到雲端電腦
+COPY . .
+
+# 啟動你的 Python 機器人
+CMD ["python", "run.py"]
