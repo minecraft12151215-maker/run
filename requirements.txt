@@ -1,0 +1,10 @@
+discord.py
+pandas
+requests
+yfinance
+beautifulsoup4
+numpy
+matplotlib
+mplfinance
+html2image
+python-dotenv
