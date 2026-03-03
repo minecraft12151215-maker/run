@@ -525,7 +525,9 @@ async def check(ctx, stock_id: str):
             </body></html>
             """
             file_name = f"report_{stock_id}.png"
-            await asyncio.to_thread(Html2Image(output_path='.').screenshot, html_str=html, save_as=file_name, size=(2480, 3508))
+            # 必須加上這三個 custom_flags，Railway 上的 Chrome 才不會崩潰
+            hti = Html2Image(output_path='.', custom_flags=['--no-sandbox', '--disable-gpu', '--disable-dev-shm-usage'])
+            await asyncio.to_thread(hti.screenshot, html_str=html, save_as=file_name, size=(2480, 3508))
             await loading.edit(content="✅ 不朽金剛版 (雙引擎爬蟲 + 絕對排版) 生成完畢！")
             await ctx.send(file=discord.File(file_name))
             os.remove(file_name) 
@@ -537,5 +539,6 @@ async def check(ctx, stock_id: str):
 @bot.event
 async def on_ready():
     print(f'🔥 A4 終極無敵雙引擎版 已上線！')
+
 
 bot.run(TOKEN)
