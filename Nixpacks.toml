@@ -1,0 +1,5 @@
+[phases.setup]
+nixPkgs = ["...", "python311", "google-chrome", "fontconfig", "noto-fonts-cjk"]
+
+[phases.build]
+cmds = ["pip install -r requirements.txt", "fc-cache -f -v"]
